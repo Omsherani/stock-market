@@ -1,0 +1,13 @@
+flask
+flask-cors
+gunicorn
+
+yfinance
+pandas
+numpy
+
+scikit-learn
+# tensorflow-cpu
+
+requests
+tradingview-ta
