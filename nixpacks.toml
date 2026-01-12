@@ -4,7 +4,7 @@ nixPkgs = ["python3", "nodejs"]
 [phases.install]
 cmds = [
     "cd frontend && npm install",
-    "cd backend && pip install -r requirements.txt"
+    "cd backend && python3 -m pip install -r requirements.txt"
 ]
 
 [phases.build]
@@ -14,4 +14,3 @@ cmds = [
 
 [start]
 cmd = "cd backend && gunicorn --bind 0.0.0.0:${PORT:-5000} app:app"
-
