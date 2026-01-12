@@ -1,0 +1,15 @@
+# Environments
+.env
+.venv
+env/
+venv/
+__pycache__/
+
+# Node
+node_modules/
+dist/
+build/
+
+# Local
+.DS_Store
+response.json

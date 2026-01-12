@@ -1,13 +1,21 @@
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import yfinance as yf
 import pandas as pd
 import numpy as np
 
-app = Flask(__name__)
+# Serve React App
+app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 CORS(app)
 print("DEBUG: Flask app initialized")
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    return send_from_directory(app.static_folder, 'index.html')
 
 # --------------------
 # Health Check

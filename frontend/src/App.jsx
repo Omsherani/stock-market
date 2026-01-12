@@ -20,7 +20,7 @@ function App() {
     setError(null)
     setPredictions(null)
     try {
-      const res = await axios.get(`http://127.0.0.1:5000/api/stock/${sym}`)
+      const res = await axios.get(`/api/stock/${sym}`)
       setData(res.data)
       setCurrentStats(res.data.stats)
       setSymbol(res.data.symbol)
@@ -40,7 +40,7 @@ function App() {
   const fetchCurrentPrice = async () => {
     if (!symbol) return
     try {
-      const res = await axios.get(`http://127.0.0.1:5000/api/price/${symbol}`)
+      const res = await axios.get(`/api/price/${symbol}`)
       if (res.data.price) {
         // Update stats with new live price
         setCurrentStats(prev => ({
@@ -60,7 +60,7 @@ function App() {
     if (!data) return;
     setLoadingPred(true)
     try {
-      const res = await axios.get(`http://127.0.0.1:5000/api/predict/${symbol}?model=${modelType}`)
+      const res = await axios.get(`/api/predict/${symbol}?model=${modelType}`)
       setPredictions(res.data.predictions)
     } catch (err) {
       console.error(err)
