@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["python3", "nodejs", "npm"]
+nixPkgs = ["python3", "nodejs"]
 
 [phases.install]
 cmds = [
@@ -14,3 +14,4 @@ cmds = [
 
 [start]
 cmd = "cd backend && gunicorn --bind 0.0.0.0:${PORT:-5000} app:app"
+
