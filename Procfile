@@ -1,1 +1,1 @@
-web: cd backend && gunicorn --bind 0.0.0.0:$PORT app:app
+web: /opt/venv/bin/gunicorn --bind 0.0.0.0:$PORT --pythonpath backend app:app

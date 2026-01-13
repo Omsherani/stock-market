@@ -5,17 +5,32 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 
-# Serve React App
-app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
+# Resolve static folder path absolutely
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_FOLDER = os.path.join(BASE_DIR, '..', 'frontend', 'dist')
+
+app = Flask(__name__, static_folder=STATIC_FOLDER, static_url_path='/')
 CORS(app)
-print("DEBUG: Flask app initialized")
+
+print(f"DEBUG: Flask app initialized. Base Dir: {BASE_DIR}")
+print(f"DEBUG: Static folder: {app.static_folder}")
+if os.path.exists(app.static_folder):
+    print(f"DEBUG: Static folder exists. Contents: {os.listdir(app.static_folder)}")
+else:
+    print(f"WARNING: Static folder NOT FOUND at {app.static_folder}")
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
         return send_from_directory(app.static_folder, path)
-    return send_from_directory(app.static_folder, 'index.html')
+    
+    # Fallback to index.html for SPA routing
+    index_path = os.path.join(app.static_folder, 'index.html')
+    if os.path.exists(index_path):
+        return send_from_directory(app.static_folder, 'index.html')
+    else:
+        return f"Static folder or index.html not found. Path: {index_path}", 404
 
 # --------------------
 # Health Check
