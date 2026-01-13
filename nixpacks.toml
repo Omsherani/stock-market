@@ -1,11 +1,6 @@
 [phases.setup]
 nixPkgs = ["python311", "nodejs_20", "stdenv.cc.cc.lib", "zlib"]
 
-[variables]
-# This environment variable helps Nixpacks/Railway locate the shared libraries
-NIXPACKS_METADATA = "python_lib_fix"
-LD_LIBRARY_PATH = "/nix/var/nix/profiles/default/lib:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
-
 [phases.install]
 cmds = [
     "cd frontend && npm install",
@@ -18,5 +13,6 @@ cmds = [
 ]
 
 [start]
-cmd = "/opt/venv/bin/gunicorn --bind 0.0.0.0:${PORT:-5000} --pythonpath backend app:app"
+# We only apply LD_LIBRARY_PATH here so it doesn't break 'npm install' or other build tools
+cmd = "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/nix/var/nix/profiles/default/lib && /opt/venv/bin/gunicorn --bind 0.0.0.0:${PORT:-5000} --pythonpath backend app:app"
 

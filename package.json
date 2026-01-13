@@ -4,6 +4,6 @@
     "description": "Root package for Railway deployment",
     "scripts": {
         "build": "cd frontend && npm install && npm run build && python3 -m venv /opt/venv && /opt/venv/bin/pip install -r backend/requirements.txt",
-        "start": "/opt/venv/bin/gunicorn --bind 0.0.0.0:$PORT --pythonpath backend app:app"
+        "start": "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/nix/var/nix/profiles/default/lib && /opt/venv/bin/gunicorn --bind 0.0.0.0:$PORT --pythonpath backend app:app"
     }
 }
