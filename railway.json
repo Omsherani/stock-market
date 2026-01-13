@@ -4,6 +4,6 @@
         "builder": "NIXPACKS"
     },
     "deploy": {
-        "startCommand": "cd backend && gunicorn --bind 0.0.0.0:$PORT app:app"
+        "startCommand": "cd backend && /opt/venv/bin/gunicorn --bind 0.0.0.0:$PORT app:app"
     }
 }
